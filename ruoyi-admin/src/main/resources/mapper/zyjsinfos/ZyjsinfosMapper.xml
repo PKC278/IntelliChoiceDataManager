@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.zyjsinfos.mapper.ZyjsinfosMapper">
+    
+    <resultMap type="Zyjsinfos" id="ZyjsinfosResult">
+        <result property="yxdm"    column="yxdm"    />
+        <result property="dicCurId"    column="dicCurId"    />
+        <result property="specId"    column="specId"    />
+        <result property="schID"    column="schID"    />
+        <result property="categoryId"    column="categoryId"    />
+        <result property="yxcc"    column="yxcc"    />
+        <result property="type"    column="type"    />
+        <result property="zy"    column="zy"    />
+        <result property="hasInfo"    column="hasInfo"    />
+        <result property="zyjs"    column="zyjs"    />
+    </resultMap>
+
+    <sql id="selectZyjsinfosVo">
+        select yxdm, dicCurId, specId, schID, categoryId, yxcc, type, zy, hasInfo, zyjs from zyjsinfos
+    </sql>
+
+    <select id="selectZyjsinfosList" parameterType="Zyjsinfos" resultMap="ZyjsinfosResult">
+        <include refid="selectZyjsinfosVo"/>
+        <where>  
+            <if test="yxdm != null "> and yxdm = #{yxdm}</if>
+            <if test="schID != null  and schID != ''"> and schID = #{schID}</if>
+            <if test="yxcc != null  and yxcc != ''"> and yxcc = #{yxcc}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="zy != null  and zy != ''"> and zy = #{zy}</if>
+            <if test="hasInfo != null  and hasInfo != ''"> and hasInfo = #{hasInfo}</if>
+            <if test="zyjs != null  and zyjs != ''"> and zyjs = #{zyjs}</if>
+        </where>
+    </select>
+    
+    <select id="selectZyjsinfosByDicCurId" parameterType="String" resultMap="ZyjsinfosResult">
+        <include refid="selectZyjsinfosVo"/>
+        where dicCurId = #{dicCurId}
+    </select>
+        
+    <insert id="insertZyjsinfos" parameterType="Zyjsinfos">
+        insert into zyjsinfos
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="yxdm != null">yxdm,</if>
+            <if test="dicCurId != null">dicCurId,</if>
+            <if test="specId != null">specId,</if>
+            <if test="schID != null and schID != ''">schID,</if>
+            <if test="categoryId != null">categoryId,</if>
+            <if test="yxcc != null">yxcc,</if>
+            <if test="type != null">type,</if>
+            <if test="zy != null">zy,</if>
+            <if test="hasInfo != null and hasInfo != ''">hasInfo,</if>
+            <if test="zyjs != null">zyjs,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="yxdm != null">#{yxdm},</if>
+            <if test="dicCurId != null">#{dicCurId},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="schID != null and schID != ''">#{schID},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="yxcc != null">#{yxcc},</if>
+            <if test="type != null">#{type},</if>
+            <if test="zy != null">#{zy},</if>
+            <if test="hasInfo != null and hasInfo != ''">#{hasInfo},</if>
+            <if test="zyjs != null">#{zyjs},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZyjsinfos" parameterType="Zyjsinfos">
+        update zyjsinfos
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="yxdm != null">yxdm = #{yxdm},</if>
+            <if test="specId != null">specId = #{specId},</if>
+            <if test="schID != null and schID != ''">schID = #{schID},</if>
+            <if test="categoryId != null">categoryId = #{categoryId},</if>
+            <if test="yxcc != null">yxcc = #{yxcc},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="zy != null">zy = #{zy},</if>
+            <if test="hasInfo != null and hasInfo != ''">hasInfo = #{hasInfo},</if>
+            <if test="zyjs != null">zyjs = #{zyjs},</if>
+        </trim>
+        where dicCurId = #{dicCurId}
+    </update>
+
+    <delete id="deleteZyjsinfosByDicCurId" parameterType="String">
+        delete from zyjsinfos where dicCurId = #{dicCurId}
+    </delete>
+
+    <delete id="deleteZyjsinfosByDicCurIds" parameterType="String">
+        delete from zyjsinfos where dicCurId in 
+        <foreach item="dicCurId" collection="array" open="(" separator="," close=")">
+            #{dicCurId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.major.mapper.MajorMapper">
+    
+    <resultMap type="Major" id="MajorResult">
+        <result property="Type"    column="Type"    />
+        <result property="CategoryID"    column="CategoryID"    />
+        <result property="Category"    column="Category"    />
+        <result property="ProfessionalID"    column="ProfessionalID"    />
+        <result property="Professional"    column="Professional"    />
+        <result property="zydm"    column="zydm"    />
+        <result property="zymc"    column="zymc"    />
+        <result property="specId"    column="specId"    />
+        <result property="zymyd"    column="zymyd"    />
+    </resultMap>
+
+    <sql id="selectMajorVo">
+        select Type, CategoryID, Category, ProfessionalID, Professional, zydm, zymc, specId, zymyd from major
+    </sql>
+
+    <select id="selectMajorList" parameterType="Major" resultMap="MajorResult">
+        <include refid="selectMajorVo"/>
+        <where>  
+            <if test="Type != null  and Type != ''"> and Type = #{Type}</if>
+            <if test="Category != null  and Category != ''"> and Category = #{Category}</if>
+            <if test="Professional != null  and Professional != ''"> and Professional = #{Professional}</if>
+            <if test="zymc != null  and zymc != ''"> and zymc = #{zymc}</if>
+            <if test="zymyd != null  and zymyd != ''"> and zymyd = #{zymyd}</if>
+        </where>
+    </select>
+    
+    <select id="selectMajorByCategoryID" parameterType="Long" resultMap="MajorResult">
+        <include refid="selectMajorVo"/>
+        where CategoryID = #{CategoryID}
+    </select>
+        
+    <insert id="insertMajor" parameterType="Major" useGeneratedKeys="true" keyProperty="CategoryID">
+        insert into major
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="Type != null">Type,</if>
+            <if test="Category != null">Category,</if>
+            <if test="ProfessionalID != null">ProfessionalID,</if>
+            <if test="Professional != null">Professional,</if>
+            <if test="zydm != null">zydm,</if>
+            <if test="zymc != null">zymc,</if>
+            <if test="specId != null">specId,</if>
+            <if test="zymyd != null">zymyd,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="Type != null">#{Type},</if>
+            <if test="Category != null">#{Category},</if>
+            <if test="ProfessionalID != null">#{ProfessionalID},</if>
+            <if test="Professional != null">#{Professional},</if>
+            <if test="zydm != null">#{zydm},</if>
+            <if test="zymc != null">#{zymc},</if>
+            <if test="specId != null">#{specId},</if>
+            <if test="zymyd != null">#{zymyd},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMajor" parameterType="Major">
+        update major
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="Type != null">Type = #{Type},</if>
+            <if test="Category != null">Category = #{Category},</if>
+            <if test="ProfessionalID != null">ProfessionalID = #{ProfessionalID},</if>
+            <if test="Professional != null">Professional = #{Professional},</if>
+            <if test="zydm != null">zydm = #{zydm},</if>
+            <if test="zymc != null">zymc = #{zymc},</if>
+            <if test="specId != null">specId = #{specId},</if>
+            <if test="zymyd != null">zymyd = #{zymyd},</if>
+        </trim>
+        where CategoryID = #{CategoryID}
+    </update>
+
+    <delete id="deleteMajorByCategoryID" parameterType="Long">
+        delete from major where CategoryID = #{CategoryID}
+    </delete>
+
+    <delete id="deleteMajorByCategoryIDs" parameterType="String">
+        delete from major where CategoryID in 
+        <foreach item="CategoryID" collection="array" open="(" separator="," close=")">
+            #{CategoryID}
+        </foreach>
+    </delete>
+</mapper>

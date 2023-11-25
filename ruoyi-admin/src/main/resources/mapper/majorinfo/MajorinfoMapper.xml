@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.majorinfo.mapper.MajorinfoMapper">
+    
+    <resultMap type="Majorinfo" id="MajorinfoResult">
+        <result property="zydm"    column="zydm"    />
+        <result property="specId"    column="specId"    />
+        <result property="zymc"    column="zymc"    />
+        <result property="xk"    column="xk"    />
+        <result property="xlcc"    column="xlcc"    />
+        <result property="zyjs"    column="zyjs"    />
+        <result property="xsgm"    column="xsgm"    />
+        <result property="boyGirlpercent"    column="boy_girlPercent"    />
+        <result property="zymyd"    column="zymyd"    />
+        <result property="zytjzsList"    column="zytjzsList"    />
+        <result property="simileZyList"    column="simileZyList"    />
+        <result property="kyfx"    column="kyfx"    />
+        <result property="jyfx"    column="jyfx"    />
+        <result property="xcspList"    column="xcspList"    />
+    </resultMap>
+
+    <sql id="selectMajorinfoVo">
+        select zydm, specId, zymc, xk, xlcc, zyjs, xsgm, boy_girlPercent, zymyd, zytjzsList, simileZyList, kyfx, jyfx, xcspList from majorInfo
+    </sql>
+
+    <select id="selectMajorinfoList" parameterType="Majorinfo" resultMap="MajorinfoResult">
+        <include refid="selectMajorinfoVo"/>
+        <where>  
+            <if test="specId != null  and specId != ''"> and specId = #{specId}</if>
+            <if test="zymc != null  and zymc != ''"> and zymc = #{zymc}</if>
+            <if test="xk != null  and xk != ''"> and xk = #{xk}</if>
+            <if test="xlcc != null  and xlcc != ''"> and xlcc = #{xlcc}</if>
+            <if test="zyjs != null  and zyjs != ''"> and zyjs = #{zyjs}</if>
+            <if test="xsgm != null  and xsgm != ''"> and xsgm = #{xsgm}</if>
+            <if test="boyGirlpercent != null  and boyGirlpercent != ''"> and boy_girlPercent = #{boyGirlpercent}</if>
+            <if test="zymyd != null  and zymyd != ''"> and zymyd = #{zymyd}</if>
+            <if test="zytjzsList != null  and zytjzsList != ''"> and zytjzsList = #{zytjzsList}</if>
+            <if test="simileZyList != null  and simileZyList != ''"> and simileZyList = #{simileZyList}</if>
+            <if test="kyfx != null  and kyfx != ''"> and kyfx = #{kyfx}</if>
+            <if test="jyfx != null  and jyfx != ''"> and jyfx = #{jyfx}</if>
+            <if test="xcspList != null  and xcspList != ''"> and xcspList = #{xcspList}</if>
+        </where>
+    </select>
+    
+    <select id="selectMajorinfoByZydm" parameterType="Long" resultMap="MajorinfoResult">
+        <include refid="selectMajorinfoVo"/>
+        where zydm = #{zydm}
+    </select>
+        
+    <insert id="insertMajorinfo" parameterType="Majorinfo" useGeneratedKeys="true" keyProperty="zydm">
+        insert into majorinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specId != null and specId != ''">specId,</if>
+            <if test="zymc != null">zymc,</if>
+            <if test="xk != null">xk,</if>
+            <if test="xlcc != null">xlcc,</if>
+            <if test="zyjs != null">zyjs,</if>
+            <if test="xsgm != null">xsgm,</if>
+            <if test="boyGirlpercent != null">boy_girlPercent,</if>
+            <if test="zymyd != null">zymyd,</if>
+            <if test="zytjzsList != null">zytjzsList,</if>
+            <if test="simileZyList != null">simileZyList,</if>
+            <if test="kyfx != null">kyfx,</if>
+            <if test="jyfx != null">jyfx,</if>
+            <if test="xcspList != null">xcspList,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specId != null and specId != ''">#{specId},</if>
+            <if test="zymc != null">#{zymc},</if>
+            <if test="xk != null">#{xk},</if>
+            <if test="xlcc != null">#{xlcc},</if>
+            <if test="zyjs != null">#{zyjs},</if>
+            <if test="xsgm != null">#{xsgm},</if>
+            <if test="boyGirlpercent != null">#{boyGirlpercent},</if>
+            <if test="zymyd != null">#{zymyd},</if>
+            <if test="zytjzsList != null">#{zytjzsList},</if>
+            <if test="simileZyList != null">#{simileZyList},</if>
+            <if test="kyfx != null">#{kyfx},</if>
+            <if test="jyfx != null">#{jyfx},</if>
+            <if test="xcspList != null">#{xcspList},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMajorinfo" parameterType="Majorinfo">
+        update majorinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specId != null and specId != ''">specId = #{specId},</if>
+            <if test="zymc != null">zymc = #{zymc},</if>
+            <if test="xk != null">xk = #{xk},</if>
+            <if test="xlcc != null">xlcc = #{xlcc},</if>
+            <if test="zyjs != null">zyjs = #{zyjs},</if>
+            <if test="xsgm != null">xsgm = #{xsgm},</if>
+            <if test="boyGirlpercent != null">boy_girlPercent = #{boyGirlpercent},</if>
+            <if test="zymyd != null">zymyd = #{zymyd},</if>
+            <if test="zytjzsList != null">zytjzsList = #{zytjzsList},</if>
+            <if test="simileZyList != null">simileZyList = #{simileZyList},</if>
+            <if test="kyfx != null">kyfx = #{kyfx},</if>
+            <if test="jyfx != null">jyfx = #{jyfx},</if>
+            <if test="xcspList != null">xcspList = #{xcspList},</if>
+        </trim>
+        where zydm = #{zydm}
+    </update>
+
+    <delete id="deleteMajorinfoByZydm" parameterType="Long">
+        delete from majorInfo where zydm = #{zydm}
+    </delete>
+
+    <delete id="deleteMajorinfoByZydms" parameterType="String">
+        delete from majorInfo where zydm in 
+        <foreach item="zydm" collection="array" open="(" separator="," close=")">
+            #{zydm}
+        </foreach>
+    </delete>
+</mapper>

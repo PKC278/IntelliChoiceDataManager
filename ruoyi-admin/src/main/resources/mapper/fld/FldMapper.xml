@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.fld.mapper.FldMapper">
+    
+    <resultMap type="Fld" id="FldResult">
+        <result property="yxdm"    column="yxdm"    />
+        <result property="schId"    column="schId"    />
+        <result property="fldName"    column="fldName"    />
+        <result property="name"    column="name"    />
+        <result property="categoryId"    column="categoryId"    />
+        <result property="infos"    column="infos"    />
+    </resultMap>
+
+    <sql id="selectFldVo">
+        select yxdm, schId, fldName, name, categoryId, infos from fld
+    </sql>
+
+    <select id="selectFldList" parameterType="Fld" resultMap="FldResult">
+        <include refid="selectFldVo"/>
+        <where>  
+            <if test="fldName != null  and fldName != ''"> and fldName like concat('%', #{fldName}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="infos != null  and infos != ''"> and infos = #{infos}</if>
+        </where>
+    </select>
+    
+    <select id="selectFldByYxdm" parameterType="Long" resultMap="FldResult">
+        <include refid="selectFldVo"/>
+        where categoryId = #{categoryId}
+    </select>
+        
+    <insert id="insertFld" parameterType="Fld">
+        insert into fld
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="yxdm != null">yxdm,</if>
+            <if test="schId != null">schId,</if>
+            <if test="fldName != null">fldName,</if>
+            <if test="name != null">name,</if>
+            <if test="categoryId != null">categoryId,</if>
+            <if test="infos != null">infos,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="yxdm != null">#{yxdm},</if>
+            <if test="schId != null">#{schId},</if>
+            <if test="fldName != null">#{fldName},</if>
+            <if test="name != null">#{name},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="infos != null">#{infos},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFld" parameterType="Fld">
+        update fld
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="schId != null">schId = #{schId},</if>
+            <if test="fldName != null">fldName = #{fldName},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">categoryId = #{categoryId},</if>
+            <if test="infos != null">infos = #{infos},</if>
+        </trim>
+        where categoryId = #{categoryId}
+    </update>
+
+    <delete id="deleteFldByYxdm" parameterType="Long">
+        delete from fld where categoryId = #{categoryId}
+    </delete>
+
+    <delete id="deleteFldByYxdms" parameterType="String">
+        delete from fld where categoryId in
+        <foreach item="yxdm" collection="array" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </delete>
+</mapper>

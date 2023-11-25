@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.colleges.mapper.CollegesMapper">
+    
+    <resultMap type="Colleges" id="CollegesResult">
+        <result property="yxdm"    column="yxdm"    />
+        <result property="schoolID"    column="schoolID"    />
+        <result property="schInfoId"    column="schInfoId"    />
+        <result property="schoolName"    column="schoolName"    />
+        <result property="location"    column="location"    />
+        <result property="governingDepartment"    column="governing_department"    />
+        <result property="universityType"    column="university_type"    />
+        <result property="educationLevel"    column="education_level"    />
+        <result property="yldx"    column="yldx"    />
+        <result property="ylxk"    column="ylxk"    />
+        <result property="syl"    column="syl"    />
+        <result property="yjs"    column="yjs"    />
+        <result property="manyidu"    column="manyidu"    />
+        <result property="schoolBadge"    column="schoolBadge"    />
+        <result property="followCount"    column="followCount"    />
+        <result property="dh"    column="dh"    />
+        <result property="hasZb"    column="hasZb"    />
+        <result property="zswz"    column="zswz"    />
+        <result property="txdz"    column="txdz"    />
+        <result property="xxwz"    column="xxwz"    />
+        <result property="avgRank"    column="avgRank"    />
+        <result property="sjzh"    column="sjzh"    />
+        <result property="wxQR"    column="wxQR"    />
+        <result property="wbQR"    column="wbQR"    />
+    </resultMap>
+
+    <sql id="selectCollegesVo">
+        select yxdm, schoolID, schInfoId, schoolName, location, governing_department, university_type, education_level, yldx, ylxk, syl, yjs, manyidu, schoolBadge, followCount, dh, hasZb, zswz, txdz, xxwz, avgRank, sjzh, wxQR, wbQR from colleges
+    </sql>
+
+    <select id="selectCollegesList" parameterType="Colleges" resultMap="CollegesResult">
+        <include refid="selectCollegesVo"/>
+        <where>  
+            <if test="yxdm != null "> and yxdm = #{yxdm}</if>
+            <if test="schoolID != null  and schoolID != ''"> and schoolID = #{schoolID}</if>
+            <if test="schInfoId != null  and schInfoId != ''"> and schInfoId = #{schInfoId}</if>
+            <if test="schoolName != null  and schoolName != ''"> and schoolName like concat('%', #{schoolName}, '%')</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="governingDepartment != null  and governingDepartment != ''"> and governing_department = #{governingDepartment}</if>
+            <if test="universityType != null  and universityType != ''"> and university_type = #{universityType}</if>
+            <if test="educationLevel != null  and educationLevel != ''"> and education_level = #{educationLevel}</if>
+            <if test="yldx != null  and yldx != ''"> and yldx = #{yldx}</if>
+            <if test="ylxk != null  and ylxk != ''"> and ylxk = #{ylxk}</if>
+            <if test="syl != null  and syl != ''"> and syl = #{syl}</if>
+            <if test="yjs != null  and yjs != ''"> and yjs = #{yjs}</if>
+            <if test="manyidu != null  and manyidu != ''"> and manyidu = #{manyidu}</if>
+            <if test="schoolBadge != null  and schoolBadge != ''"> and schoolBadge = #{schoolBadge}</if>
+            <if test="followCount != null  and followCount != ''"> and followCount = #{followCount}</if>
+            <if test="dh != null  and dh != ''"> and dh = #{dh}</if>
+            <if test="hasZb != null  and hasZb != ''"> and hasZb = #{hasZb}</if>
+            <if test="zswz != null  and zswz != ''"> and zswz = #{zswz}</if>
+            <if test="txdz != null  and txdz != ''"> and txdz = #{txdz}</if>
+            <if test="xxwz != null  and xxwz != ''"> and xxwz = #{xxwz}</if>
+            <if test="avgRank != null  and avgRank != ''"> and avgRank = #{avgRank}</if>
+            <if test="sjzh != null  and sjzh != ''"> and sjzh = #{sjzh}</if>
+            <if test="wxQR != null  and wxQR != ''"> and wxQR = #{wxQR}</if>
+            <if test="wbQR != null  and wbQR != ''"> and wbQR = #{wbQR}</if>
+        </where>
+    </select>
+    
+    <select id="selectCollegesByYxdm" parameterType="Long" resultMap="CollegesResult">
+        <include refid="selectCollegesVo"/>
+        where yxdm = #{yxdm}
+    </select>
+        
+    <insert id="insertColleges" parameterType="Colleges" useGeneratedKeys="true" keyProperty="yxdm">
+        insert into colleges
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="schoolID != null">schoolID,</if>
+            <if test="schInfoId != null">schInfoId,</if>
+            <if test="schoolName != null">schoolName,</if>
+            <if test="location != null">location,</if>
+            <if test="governingDepartment != null">governing_department,</if>
+            <if test="universityType != null">university_type,</if>
+            <if test="educationLevel != null">education_level,</if>
+            <if test="yldx != null">yldx,</if>
+            <if test="ylxk != null">ylxk,</if>
+            <if test="syl != null">syl,</if>
+            <if test="yjs != null">yjs,</if>
+            <if test="manyidu != null">manyidu,</if>
+            <if test="schoolBadge != null">schoolBadge,</if>
+            <if test="followCount != null">followCount,</if>
+            <if test="dh != null">dh,</if>
+            <if test="hasZb != null">hasZb,</if>
+            <if test="zswz != null">zswz,</if>
+            <if test="txdz != null">txdz,</if>
+            <if test="xxwz != null">xxwz,</if>
+            <if test="avgRank != null">avgRank,</if>
+            <if test="sjzh != null">sjzh,</if>
+            <if test="wxQR != null">wxQR,</if>
+            <if test="wbQR != null">wbQR,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="schoolID != null">#{schoolID},</if>
+            <if test="schInfoId != null">#{schInfoId},</if>
+            <if test="schoolName != null">#{schoolName},</if>
+            <if test="location != null">#{location},</if>
+            <if test="governingDepartment != null">#{governingDepartment},</if>
+            <if test="universityType != null">#{universityType},</if>
+            <if test="educationLevel != null">#{educationLevel},</if>
+            <if test="yldx != null">#{yldx},</if>
+            <if test="ylxk != null">#{ylxk},</if>
+            <if test="syl != null">#{syl},</if>
+            <if test="yjs != null">#{yjs},</if>
+            <if test="manyidu != null">#{manyidu},</if>
+            <if test="schoolBadge != null">#{schoolBadge},</if>
+            <if test="followCount != null">#{followCount},</if>
+            <if test="dh != null">#{dh},</if>
+            <if test="hasZb != null">#{hasZb},</if>
+            <if test="zswz != null">#{zswz},</if>
+            <if test="txdz != null">#{txdz},</if>
+            <if test="xxwz != null">#{xxwz},</if>
+            <if test="avgRank != null">#{avgRank},</if>
+            <if test="sjzh != null">#{sjzh},</if>
+            <if test="wxQR != null">#{wxQR},</if>
+            <if test="wbQR != null">#{wbQR},</if>
+         </trim>
+    </insert>
+
+    <update id="updateColleges" parameterType="Colleges">
+        update colleges
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="schoolID != null">schoolID = #{schoolID},</if>
+            <if test="schInfoId != null">schInfoId = #{schInfoId},</if>
+            <if test="schoolName != null">schoolName = #{schoolName},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="governingDepartment != null">governing_department = #{governingDepartment},</if>
+            <if test="universityType != null">university_type = #{universityType},</if>
+            <if test="educationLevel != null">education_level = #{educationLevel},</if>
+            <if test="yldx != null">yldx = #{yldx},</if>
+            <if test="ylxk != null">ylxk = #{ylxk},</if>
+            <if test="syl != null">syl = #{syl},</if>
+            <if test="yjs != null">yjs = #{yjs},</if>
+            <if test="manyidu != null">manyidu = #{manyidu},</if>
+            <if test="schoolBadge != null">schoolBadge = #{schoolBadge},</if>
+            <if test="followCount != null">followCount = #{followCount},</if>
+            <if test="dh != null">dh = #{dh},</if>
+            <if test="hasZb != null">hasZb = #{hasZb},</if>
+            <if test="zswz != null">zswz = #{zswz},</if>
+            <if test="txdz != null">txdz = #{txdz},</if>
+            <if test="xxwz != null">xxwz = #{xxwz},</if>
+            <if test="avgRank != null">avgRank = #{avgRank},</if>
+            <if test="sjzh != null">sjzh = #{sjzh},</if>
+            <if test="wxQR != null">wxQR = #{wxQR},</if>
+            <if test="wbQR != null">wbQR = #{wbQR},</if>
+        </trim>
+        where yxdm = #{yxdm}
+    </update>
+
+    <delete id="deleteCollegesByYxdm" parameterType="Long">
+        delete from colleges where yxdm = #{yxdm}
+    </delete>
+
+    <delete id="deleteCollegesByYxdms" parameterType="String">
+        delete from colleges where yxdm in 
+        <foreach item="yxdm" collection="array" open="(" separator="," close=")">
+            #{yxdm}
+        </foreach>
+    </delete>
+</mapper>

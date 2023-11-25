@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.users.mapper.UsersMapper">
+    
+    <resultMap type="Users" id="UsersResult">
+        <result property="UserId"    column="UserId"    />
+        <result property="UserName"    column="UserName"    />
+        <result property="UserEmail"    column="UserEmail"    />
+        <result property="UserPwd"    column="UserPwd"    />
+        <result property="RegTime"    column="RegTime"    />
+        <result property="Token"    column="Token"    />
+        <result property="LastLogin"    column="LastLogin"    />
+    </resultMap>
+
+    <sql id="selectUsersVo">
+        select UserId, UserName, UserEmail, UserPwd, RegTime, Token, LastLogin from Users
+    </sql>
+
+    <select id="selectUsersList" parameterType="Users" resultMap="UsersResult">
+        <include refid="selectUsersVo"/>
+        <where>  
+            <if test="UserName != null  and UserName != ''"> and UserName like concat('%', #{UserName}, '%')</if>
+            <if test="UserEmail != null  and UserEmail != ''"> and UserEmail = #{UserEmail}</if>
+            <if test="UserPwd != null  and UserPwd != ''"> and UserPwd = #{UserPwd}</if>
+            <if test="RegTime != null "> and RegTime = #{RegTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectUsersByUserId" parameterType="Long" resultMap="UsersResult">
+        <include refid="selectUsersVo"/>
+        where UserId = #{UserId}
+    </select>
+        
+    <insert id="insertUsers" parameterType="Users" useGeneratedKeys="true" keyProperty="UserId">
+        insert into Users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="UserName != null and UserName != ''">UserName,</if>
+            <if test="UserEmail != null and UserEmail != ''">UserEmail,</if>
+            <if test="UserPwd != null and UserPwd != ''">UserPwd,</if>
+            <if test="RegTime != null">RegTime,</if>
+            <if test="Token != null">Token,</if>
+            <if test="LastLogin != null">LastLogin,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="UserName != null">#{UserName},</if>
+            <if test="UserEmail != null">#{UserEmail},</if>
+            <if test="UserPwd != null">#{UserPwd},</if>
+            <if test="RegTime != null">#{RegTime},</if>
+            <if test="Token != null">#{Token},</if>
+            <if test="LastLogin != null">#{LastLogin},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUsers" parameterType="Users">
+        update Users
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="UserName != null  and UserName != ''">UserName = #{UserName},</if>
+            <if test="UserEmail != null  and UserEmail != ''">UserEmail = #{UserEmail},</if>
+            <if test="UserPwd != null  and UserPwd != ''">UserPwd = #{UserPwd},</if>
+            <if test="RegTime != null">RegTime = #{RegTime},</if>
+            <if test="Token != null">Token = #{Token},</if>
+            <if test="LastLogin != null">LastLogin = #{LastLogin},</if>
+        </trim>
+        where UserId = #{UserId}
+    </update>
+
+    <delete id="deleteUsersByUserId" parameterType="Long">
+        delete from Users where UserId = #{UserId}
+    </delete>
+
+    <delete id="deleteUsersByUserIds" parameterType="String">
+        delete from Users where UserId in 
+        <foreach item="UserId" collection="array" open="(" separator="," close=")">
+            #{UserId}
+        </foreach>
+    </delete>
+</mapper>
